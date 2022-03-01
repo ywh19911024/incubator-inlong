@@ -33,7 +33,6 @@ import org.apache.inlong.sort.protocol.deserialization.JsonDeserializationInfo;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.apache.inlong.sort.singletenant.flink.utils.CommonUtils;
 
 import static org.apache.inlong.sort.singletenant.flink.utils.CommonUtils.buildAvroRecordSchemaInJson;
 import static org.apache.inlong.sort.singletenant.flink.utils.CommonUtils.convertDateToStringFormatInfo;
@@ -46,19 +45,16 @@ public class DeserializationSchemaFactory {
             FieldInfo[] fieldInfos,
             DeserializationInfo deserializationInfo) throws IOException, ClassNotFoundException {
         if (deserializationInfo instanceof JsonDeserializationInfo) {
-            return buildJsonDeserializationSchema(CommonUtils.extractNonBuiltInFieldInfos(fieldInfos));
+            return buildJsonDeserializationSchema(fieldInfos);
         } else if (deserializationInfo instanceof AvroDeserializationInfo) {
-            return buildAvroDeserializationSchema(CommonUtils.extractNonBuiltInFieldInfos(fieldInfos));
+            return buildAvroDeserializationSchema(fieldInfos);
         } else if (deserializationInfo instanceof CanalDeserializationInfo) {
-            return CanalDeserializationSchemaBuilder.build(
-                    CommonUtils.extractNonBuiltInFieldInfos(fieldInfos),
-                    (CanalDeserializationInfo) deserializationInfo);
+            return CanalDeserializationSchemaBuilder.build(fieldInfos, (CanalDeserializationInfo) deserializationInfo);
         } else if (deserializationInfo instanceof DebeziumDeserializationInfo) {
-            return DebeziumDeserializationSchemaBuilder.build(
-                    fieldInfos,
+            return DebeziumDeserializationSchemaBuilder.build(fieldInfos,
                     (DebeziumDeserializationInfo) deserializationInfo);
         } else {
-            return buildStringDeserializationSchema(CommonUtils.extractNonBuiltInFieldInfos(fieldInfos));
+            return buildStringDeserializationSchema(fieldInfos);
         }
     }
 

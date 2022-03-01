@@ -17,7 +17,6 @@
 
 package org.apache.inlong.sort.singletenant.flink.deserialization;
 
-import java.util.HashMap;
 import org.apache.flink.types.Row;
 import org.apache.inlong.sort.configuration.Configuration;
 import org.apache.inlong.sort.formats.common.IntFormatInfo;
@@ -54,7 +53,7 @@ public class FieldMappingTransformerTest {
         configuration.setBoolean(SINK_FIELD_TYPE_SHORT_NULLABLE, false);
         configuration.setBoolean(SINK_FIELD_TYPE_LONG_NULLABLE, false);
         FieldMappingTransformer transformer = new FieldMappingTransformer(configuration, fieldInfos);
-        Row resultRow = transformer.transform(Row.of(new HashMap<>(), 1), ms);
+        Row resultRow = transformer.transform(Row.of(1), ms);
 
         assertEquals(6, resultRow.getArity());
         assertEquals(new Timestamp(ms), resultRow.getField(0));

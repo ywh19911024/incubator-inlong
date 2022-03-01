@@ -56,7 +56,6 @@
         <module>format-kv</module>
         <module>format-inlongmsg-base</module>
         <module>format-inlongmsg-csv</module>
-        <module>format-json</module>
     </modules>
 
     <properties>
